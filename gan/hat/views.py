@@ -176,9 +176,10 @@ def pull(request, game_id):
   #Начало хода
 
   timeout = False
-  elapsed_time = timezone.now() - game.timer
-  if elapsed_time.seconds >= game.seconds:
-    timeout = True
+  if game.timer:
+    elapsed_time = timezone.now() - game.timer
+    if elapsed_time.seconds >= game.seconds:
+      timeout = True
   
   if request.POST.get('action', '') == 'turn':
     game.turn_number = player.number
