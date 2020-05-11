@@ -174,20 +174,19 @@ def pull(request, game_id):
     return HttpResponseRedirect(reverse('hat:game', args=(game.id,)))
 
   #Начало хода
+
+  timeout = False
+  elapsed_time = timezone.now() - game.timer
+  if elapsed_time.seconds >= game.seconds:
+    timeout = True
   
   if request.POST.get('action', '') == 'turn':
     game.turn_number = player.number
     game.timer = timezone.now()
-
-  timeout = False
-  if request.POST.get('action', '') == 'match':
-    elapsed_time = timezone.now() - game.timer
-    if elapsed_time.seconds < game.seconds:
+  elif request.POST.get('action', '') == 'match':
+    if not timeout:
       player.grades += 1
-    else:
-      timeout = True
-
-  if request.POST.get('action', '') == 'mismatch':
+  elif request.POST.get('action', '') == 'mismatch':
       timeout = True
   
   next_round = False
@@ -198,15 +197,14 @@ def pull(request, game_id):
       player.cur_word = None
       #Ход следующего игрока
       game.turn_number = ((game.turn_number+1)%game.player_set.count())
-      #Раунд окончен
-      if game.turn_number == game.begin_number:
-        next_round = True
+      # Нельзя оканчивать раунд, пока не открыты все слова
+      #if game.turn_number == game.begin_number:
+      #  next_round = True
     game.timer = None
   else:
-    unchecked_words = player.word_set.filter(checked=False)
+    unchecked_words = game.word_set.filter(checked=False)
     #В шляпе еще есть слова
     if unchecked_words.count():
-      seed(1)
       num = randint(0, unchecked_words.count()-1)
       word = unchecked_words[num]
       word.checked = True
