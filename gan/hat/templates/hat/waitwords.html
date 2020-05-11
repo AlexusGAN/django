@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+{% load static %}
+<!-- disable iPhone inital scale -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Шляпа [{{ player.name }}]</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- main css -->
+<link href="{% static 'hat/style.css' %}"  rel="stylesheet" type="text/css">
+<!-- media queries css -->
+<link href="{% static 'hat/media-queries.css' %}"  rel="stylesheet" type="text/css">
+<script>
+var allwords = {{ game.TotalWordsCount }};
+function fetchdata(){
+ $.getJSON("wordsajax", function(data) {
+   if (allwords != data['allwords'])
+      location.reload();
+   else
+      setTimeout(fetchdata,2000);
+ });
+}
+
+$(document).ready(function(){
+ setTimeout(fetchdata,2000);
+});
+</script>
+</head>
+<body>
+<div id="pagewrap">
+	<header id="header">
+		<hgroup>
+    <h1>Шляпа №{{ game.id }} (я {{ player.name }})</h1>
+    <h2>Ждем, пока все придумают слова</h2>
+		</hgroup>
+	</header>	
+
+	<div id="content">
+		<article class="post clearfix">
+			<header>
+			</header>
+			<figure class="post-image"> 
+			</figure>			
+
+{% if game.player_set.count %}
+    <ul>
+    {% for player in game.player_set.all %}
+        <li>{{ player.name }} {{ player.word_set.count }} слов</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Нет игроков.</p>
+{% endif %}
+
+		</article>
+	</div>
+	<!-- /#content --> 
+	<footer id="footer">
+		<p>Здесь был Губанов Алексей!! <a href="http://slavonicpro.ru">Slavonic</a></p>
+	</footer>
+	
+</div>
+<!-- /#pagewrap -->
+
+</body>
+</html>

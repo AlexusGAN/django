@@ -1,0 +1,83 @@
+https://docs.djangoproject.com/en/3.0/intro/tutorial02/
+
+* Создать проект (из каталога Django, каталог проекта руками создавать не нужно):
+django-admin.py startproject <имя проекта> 
+
+* Настройка проекта:
+Меняем имя базы на наше (например, 'gan.db'):
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'gan.db'),
+    }
+}
+Язык:
+LANGUAGE_CODE = 'ru-ru'
+Локализация
+TIME_ZONE = 'Europe/Moscow'
+
+* Создать базу из моделей:
+manage.py migrate 
+
+* Запустить веб-сервер
+manage.py runserver
+Остановить сервер: <Ctrl>+<Break>
+
+*Создать суперпользователя
+python manage.py createsuperuser
+Для проекта gan:
+Логин: gan
+Пароль: cppcppcpp
+e-mail: gubanov-alexey@yandex.ru
+
+* версия Django
+python -m django --version
+
+* Создать приложение hat в проекте
+manage.py startapp hat
+
+* Активация приложения
+To include the app in our project, we need to add a reference to its configuration class in the INSTALLED_APPS setting. 
+The HatConfig class is in the hat/apps.py file, so its dotted path is 'hat.apps.HatConfig'. 
+Edit the gan/settings.py file and add that dotted path to the INSTALLED_APPS setting. It’ll look like this:
+
+В gan/settings.py:
+INSTALLED_APPS = [
+    'hat.apps.HatConfig',
+    'django.contrib.admin',
+	...
+]
+
+* Создать миграцию в hat/migrations/0001_initial.py
+ manage.py makemigrations hat
+
+* Применить миграцию
+ manage.py migrate
+
+* Посмотреть SQL миграции
+ manage.py sqlmigrate hat 0001
+
+* Запуск Питоновской оболочки, настроенной на проект
+manage.py shell
+
+* Админский сайт
+ http://127.0.0.1:8000/admin/
+ 
+* Доступ к дочерним записям модели Choice из Модели Query q.
+ q.choice_set.all()
+ q.choice_set.create(choice_text='Not much', votes=0)
+ 
+* Статический каталог
+ hat/static/hat/style.css
+ 
+* Запустить свой скрипт в окружении Django проще всего как команду Django
+Для этого создаем скрипт как Django\gan\hat\management\commands\myscript.py
+from django.core.management.base import BaseCommand
+class Command(BaseCommand):
+  def handle(self, **options):
+    пишем здесь код
+
+Вызываем так:
+manage.py myscript
+
+svn checkout svn+ssh:https://helixteamhub.cloud/slavonicpro/projects/gan/repositories/subversion/gan/gan —username gubanov-alexey@yandex.ru —password slavonic

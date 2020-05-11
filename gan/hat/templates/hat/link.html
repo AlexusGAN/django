@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+{% load static %}
+<!-- disable iPhone inital scale -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Шляпа</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- main css -->
+<link href="{% static 'hat/style.css' %}"  rel="stylesheet" type="text/css">
+<!-- media queries css -->
+<link href="{% static 'hat/media-queries.css' %}"  rel="stylesheet" type="text/css">
+
+<script>
+function Copy() {
+  var Url = document.getElementById("Url");
+  var link = window.location.href.slice(0, -4);
+  Url.value = link;
+  Url.select();
+  document.execCommand("copy");
+}
+
+$(document).ready(function(){
+  var Url = document.getElementById("Url");
+  var link = window.location.href.slice(0, -4);
+  Url.value = link;
+});
+
+
+</script>
+
+</head>
+<body>
+
+<div id="pagewrap">
+	<header id="header">
+		<hgroup>
+    <h1>Шляпа №{{ game.id }}</h1>
+    <h2>Скопируй ссылку и перешли ее всем игрокам</h2>
+		</hgroup>
+	</header>	
+
+	<div id="content">
+		<article class="post clearfix">
+			<header>
+			</header>
+			<figure class="post-image"> 
+			</figure>			
+
+      <form id="form" action="{% url 'hat:pull' game.id %}" method="post">
+        {% csrf_token %}
+          <button type="button" onclick="Copy();">Копировать ссылку в буфер</button>
+<textarea rows="3" name="Url" id="Url"></textarea> 
+          <button type="button" onclick="location.href='{% url 'hat:game' game.id %}';">Начать игру</button>
+      </form>
+
+		</article>
+	</div>
+	<!-- /#content --> 
+	<footer id="footer">
+		<p>Здесь был Губанов Алексей!! <a href="http://slavonicpro.ru">Slavonic</a></p>
+	</footer>
+	
+</div>
+<!-- /#pagewrap -->
+
+</body>
+</html>
