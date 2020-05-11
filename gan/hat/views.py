@@ -174,6 +174,9 @@ def pull(request, game_id):
     return HttpResponseRedirect(reverse('hat:game', args=(game.id,)))
 
   #Начало хода
+  if request.POST.get('action', '') == 'turn':
+    game.turn_number = player.number
+    game.timer = timezone.now()
 
   timeout = False
   if game.timer:
@@ -181,10 +184,8 @@ def pull(request, game_id):
     if elapsed_time.seconds >= game.seconds:
       timeout = True
   
-  if request.POST.get('action', '') == 'turn':
-    game.turn_number = player.number
-    game.timer = timezone.now()
-  elif request.POST.get('action', '') == 'match':
+   
+  if request.POST.get('action', '') == 'match':
     if not timeout:
       player.grades += 1
   elif request.POST.get('action', '') == 'mismatch':
