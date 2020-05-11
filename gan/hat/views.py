@@ -178,12 +178,11 @@ def pull(request, game_id):
     game.turn_number = player.number
     game.timer = timezone.now()
 
-  timeout = False
+  timeout = True
   if game.timer:
     elapsed_time = timezone.now() - game.timer
-    if elapsed_time.seconds >= game.seconds:
-      timeout = True
-  
+    if elapsed_time.seconds < game.seconds:
+      timeout = False
    
   if request.POST.get('action', '') == 'match':
     if not timeout:
@@ -202,7 +201,7 @@ def pull(request, game_id):
       # Нельзя оканчивать раунд, пока не открыты все слова
       #if game.turn_number == game.begin_number:
       #  next_round = True
-    #game.timer = None
+    game.timer = None
   else:
     unchecked_words = game.word_set.filter(checked=False)
     #В шляпе еще есть слова
