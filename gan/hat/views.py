@@ -200,7 +200,7 @@ def pull(request, game_id):
       # Нельзя оканчивать раунд, пока не открыты все слова
       #if game.turn_number == game.begin_number:
       #  next_round = True
-    game.timer = None
+    #game.timer = None
   else:
     unchecked_words = game.word_set.filter(checked=False)
     #В шляпе еще есть слова
