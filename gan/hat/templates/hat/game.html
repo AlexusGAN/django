@@ -18,17 +18,23 @@
   var game_state = {{ game.state }};
   var turn_number = {{ game.turn_number }};
   var grades = {{ game.cur_player.grades }};
+{% if game.state == 1 %}
+  $("body").css("background-color", "#003333");//зеленый
+{% endif %}
+{% if game.state == 2 %}
+  $("body").css("background-color", "#4d0424");//фиолет
+{% endif %}
+{% if game.state == 3 %}
+  $("body").css("background-color", "#660000");//красный
+{% endif %}
 </script>
 
 <div id="pagewrap">
 	<header id="header">
 		<hgroup>
 			<h1>Шляпа №{{ game.id }} (я {{ player.name }})</h1>
-			<h2>{{ game.round_name }}
-{% if not game.IsOver  %}
-			<br>Тянет слова {{ game.cur_player.name }}
-{% endif %}
-      </h2>
+			<h2>{{ game.round_name }}<br>
+      Тянет слова <span id="cur_player">{{ game.cur_player.name }}</span></h2>
 		</hgroup>
   </header>	
 
@@ -73,10 +79,6 @@
 
 		</article>
     
-{% if game.IsOver  %}
- <button type="button" onclick="location.href='{% url 'hat:new' %}';">Сыграть еще раз</button>
-{% endif %}
-
 	</div>
 	<!-- /#content --> 
 	

@@ -1,0 +1,17 @@
+[http]
+	sslCAInfo = C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
+	sslBackend = openssl
+[diff "astextplain"]
+	textconv = astextplain
+[credential]
+	helper = manager
+[core]
+	autocrlf = true
+	fscache = true
+	symlinks = false
+  quotepath = false
+  ignorecase = true
+  pager = cat|more.com
+[i18n]
+  commitencoding = cp1251
+  logoutputencoding = cp866

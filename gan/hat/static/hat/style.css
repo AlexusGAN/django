@@ -258,6 +258,10 @@ textarea{
   width: 100%;
 }
 
+#cur_player{
+	color: #f00;
+}
+
 #timer{
   width: 100%;
 }

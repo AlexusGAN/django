@@ -81,3 +81,35 @@ class Command(BaseCommand):
 manage.py myscript
 
 svn checkout svn+ssh:https://helixteamhub.cloud/slavonicpro/projects/gan/repositories/subversion/gan/gan —username gubanov-alexey@yandex.ru —password slavonic
+
+GIT
+https://pyneng.github.io/docs/git-github/
+https://maxsite.org/page/how-to-put-your-project-on-github-com
+https://old.calculate-linux.org/main/ru/git
+
+
+Команда git pull сразу забирает изменения и проводит слияние с активной веткой.
+Забрать из репозитория, для которого были созданы удаленные ветки по умолчанию:
+git pull
+
+Забрать изменения и метки из определенного репозитория:
+git pull username-project --tags
+
+Отправить свои изменения в удаленную ветку, созданную при клонировании по умолчанию:
+git push
+
+Для работы с ним локально, его нужно скопировать. Для этого используется команда git clone:
+$ git clone ssh://git@github.com/pyneng/online-4-natasha-samoylenko.git
+
+перед началом работы, синхронизируете локальное содержимое с GitHub командой git pull (синхронизация из GitHub в локальный репозиторий)
+редактируете какие-то файлы репозитория
+добавляете их в staging командой git add .
+делаете commit с помощью git commit
+когда вы готовы закачать локальные изменения на GitHub, делаете git push
+
+Локально
+git add .
+git commit -m 'Комментарий к коммиту'
+git push 
+На сайте
+git pull

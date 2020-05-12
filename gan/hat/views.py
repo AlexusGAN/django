@@ -281,7 +281,20 @@ def game(request, game_id):
     game = Game.objects.get(pk=game_id)
   except:
     return HttpResponseRedirect(reverse('hat:new'))
+
+  num_comnamds = game.player_set.count()//2
+  commands_list = [None] * num_comnamds
+  
+  for pl in game.player_set.all():
+    if commands_list[pl.command-1] == None:
+      commands_list[pl.command-1] = [pl.name, None, pl.grades]
+    else:
+      commands_list[pl.command-1][1] = pl.name
+      commands_list[pl.command-1][2] += pl.grades
     
+  if game.IsOver():
+    return render(request, 'hat/gameover.html', {'game': game, 'commands_list':commands_list})  
+      
   player_id = request.session.get('player_id', 0)
   #Проверим, принадлежит ли player_id данной игре
   try:
@@ -301,15 +314,5 @@ def game(request, game_id):
   if game.state == 0:
     return render(request, 'hat/waitwords.html', {'game': game, 'player':player})  
       
-  num_comnamds = game.player_set.count()//2
-  commands_list = [None] * num_comnamds
-  
-  for pl in game.player_set.all():
-    if commands_list[pl.command-1] == None:
-      commands_list[pl.command-1] = [pl.name, None, pl.grades]
-    else:
-      commands_list[pl.command-1][1] = pl.name
-      commands_list[pl.command-1][2] += pl.grades
-
   return render(request, 'hat/game.html', {'game': game, 'player':player, 'commands_list':commands_list})  
   
