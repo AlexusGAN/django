@@ -111,5 +111,9 @@ $ git clone ssh://git@github.com/pyneng/online-4-natasha-samoylenko.git
 git add .
 git commit -m 'Комментарий к коммиту'
 git push 
-На сайте
+
+В консоли на https://www.pythonanywhere.com/user/gan/consoles
+* Отменить правки в базе, иначе не даст сделать git pull
+git checkout gan/gan.db
+* Взять из удаленного репозитория
 git pull

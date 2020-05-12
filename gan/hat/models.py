@@ -35,7 +35,7 @@ class Game(models.Model):
     elif self.state == 2:
       return "Раунд 2: Покажи жестами"
     elif self.state == 3:
-      return "Раунд 3: Издай звуками"
+      return "Раунд 3: Одним словом"
     else:
       return "Игра окончена"
       

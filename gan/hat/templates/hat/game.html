@@ -52,7 +52,7 @@
 <form id="form" action="{% url 'hat:pull' game.id %}" method="post">
   {% csrf_token %}
   {% if player.cur_word %}
-    <div id="word">{{ player.cur_word.word }}</div>
+    <div id="word"><span id="wordspan">{{ player.cur_word.word }}</span></div>
     <button type="submit" name="action" value="match">Угадал</button>
   {% else %}
     <button type="submit" name="action" value="turn">Выбрать слово</button>
