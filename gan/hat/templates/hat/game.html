@@ -27,6 +27,9 @@
 {% if game.state == 3 %}
   $("body").css("background-color", "#660000");//красный
 {% endif %}
+{% if game.state > 3 %}
+  $("body").css("background-color", "#663300");//коричневый
+{% endif %}
 </script>
 
 <div id="pagewrap">

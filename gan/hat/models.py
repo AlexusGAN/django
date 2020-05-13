@@ -23,11 +23,16 @@ class Game(models.Model):
   
   wordsnum = models.SmallIntegerField(default=5) #количество слов
   seconds = models.SmallIntegerField(default=60) #секунд на ход
+  roundsnum = models.SmallIntegerField(default=3) #количество раундов
   
   def cur_player(self):
     return self.player_set.all()[self.turn_number]
-  
+   
+  #Описание раунда
   def round_name(self):
+    if self.IsOver():
+      return "Игра окончена"
+    
     if self.state == 0:
       return "Подготовка к игре"
     elif self.state == 1:
@@ -36,11 +41,13 @@ class Game(models.Model):
       return "Раунд 2: Покажи жестами"
     elif self.state == 3:
       return "Раунд 3: Одним словом"
+    elif self.state == 4:
+      return "Раунд 4: Издай звуком"
     else:
-      return "Игра окончена"
+      return f"Раунд {self.state}"
       
   def IsOver(self):
-    return self.state == 4
+    return self.state > self.roundsnum
       
   #Значение прогрессбара от 0 до 100
   def progress(self):

@@ -19,6 +19,8 @@ def create(request):
   allplayers = request.POST['players']
   wordsnum = request.POST['wordsnum']
   seconds = request.POST['seconds']
+  roundsnum = request.POST['roundsnum']
+  
   commands = allplayers.splitlines()
   if len(commands) == 0:
     return HttpResponseRedirect(reverse('hat:new'))
@@ -32,6 +34,7 @@ def create(request):
   game = Game()
   game.wordsnum = wordsnum
   game.seconds = seconds
+  game.roundsnum = roundsnum
   game.save()
   
   #Создаем в базе первых игроков команды
@@ -156,7 +159,7 @@ def pull(request, game_id):
     return HttpResponseRedirect(reverse('hat:new'))
 
   #Игра окончена
-  if game.state < 0:
+  if game.IsOver():
     return HttpResponseRedirect(reverse('hat:game', args=(game.id,)))
     
   player_id = request.session.get('player_id', 0)
@@ -218,7 +221,7 @@ def pull(request, game_id):
   if next_round:
     player.cur_word = None
     game.timer = None
-    game.state = game.state+1
+    game.state += 1
     game.begin_number = ((game.begin_number+1)%game.player_set.count())
     game.turn_number = game.begin_number
     words = game.word_set.all()

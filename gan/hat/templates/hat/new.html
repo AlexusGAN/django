@@ -19,7 +19,7 @@
 	<header id="header">
 		<hgroup>
     <h1>Новая шляпа</h1>
-		<h2>Введите игроков</h2>
+		<h2>Введи игроков</h2>
 		</hgroup>
 	</header>	
 
@@ -33,16 +33,20 @@
 
 <form action="{% url 'hat:create' %}" method="post">
 {% csrf_token %}
-  По <input type="text" name="wordsnum" id="wordsnum" value="5" size="2pt"> слов с игрока.
-  <p>По <input type="text" name="seconds" id="seconds" value="60" size="2pt"> секунд на ход.
-  <p>Игроков одной команды вводите через '+'. Каждую команду вводите с новой строки.
+  <p>По <input type="text" name="wordsnum" id="wordsnum" value="5" size="1pt"> слов с игрока
+  <p>По <input type="text" name="seconds" id="seconds" value="60" size="1pt"> секунд на ход
+  <p>Играть <input type="text" name="roundsnum" id="roundsnum" value="3" size="1pt"> раунда
+  <p>Напиши игроков одной команды через '+'. Каждую команду вводи с новой строки. Например:
   <p>
-<textarea rows="8" name="players" id="players"></textarea>
+<textarea rows="8" name="players" id="players">
+Марс+Венера
+Земля+Луна
+Юпитер+Сатурн
+Меркурий+Уран
+</textarea>
   <p>
 <button type="submit" name="action" value="start">Начать игру</button>
 </form>
-  <p>Пример:
-  <p>Федя+Петя<br>Маша+Зоя
 
 		</article>
 	</div>
