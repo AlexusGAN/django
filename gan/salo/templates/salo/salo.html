@@ -15,11 +15,15 @@
 <body>
 <script>
 function HideSalo(){
-  $("#salo").hide();
   $("#btn").hide();
-  $("#txt").html("Вот проглот!");
-  $("#round").html("Игра окончена. Победил Саша Рохлин.");
+  $("#txt").show();
   $("#btn2").show();
+{% if post %}
+  $("#round").html("Игра окончена. Саша Рохлин проиграл.");
+{% else %}
+  $("#salo").hide();
+  $("#round").html("Игра окончена. Победил Саша Рохлин.");
+{% endif %}
 }
 </script>
 
@@ -35,7 +39,14 @@ function HideSalo(){
 		<article class="post clearfix">
 			<header>
       <img id="salo" src='{% static 'salo/salo.jpg' %}'>
-      <div id='txt'></div>
+      <div id='txt' style="display: none;">
+{% if post %}
+      <p>Хрен тебе, а не сала, голубчик Сашенька!!
+      <p>{{ post }}
+{% else %}
+      <p>Вот проглот!
+{% endif %}
+      </div>
 			</header>
 			<figure class="post-image"> 
 			</figure>			
