@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['localhost', 'gan.pythonanywhere.com', '127.0.0.1', '192.168.1.
 
 INSTALLED_APPS = [
     'hat.apps.HatConfig',
+    'salo.apps.SaloConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

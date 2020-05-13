@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+{% load static %}
+<!-- disable iPhone inital scale -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сало</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!-- main css -->
+<link href="{% static 'salo/salostyle.css' %}"  rel="stylesheet" type="text/css">
+<!-- media queries css -->
+<link href="{% static 'salo/media-queries.css' %}"  rel="stylesheet" type="text/css">
+</head>
+<body>
+<script>
+function HideSalo(){
+  $("#salo").hide();
+  $("#btn").hide();
+  $("#txt").html("Вот проглот!");
+  $("#round").html("Игра окончена. Победил Саша Рохлин.");
+  $("#btn2").show();
+}
+</script>
+
+<div id="pagewrap">
+	<header id="header">
+		<hgroup>
+			<h1>Сало</h1>
+			<h2 id='round'>Раунд 1: Режет только Саша Рохлин</h2>
+		</hgroup>
+  </header>	
+
+	<div id="content">
+		<article class="post clearfix">
+			<header>
+      <img id="salo" src='{% static 'salo/salo.jpg' %}'>
+      <div id='txt'></div>
+			</header>
+			<figure class="post-image"> 
+			</figure>			
+
+<button type="button" id='btn' name="action" value="mismatch" onclick="HideSalo()">Съешь меня, голубчик Сашенька!!</button>
+<button type="button" id='btn2' style="display: none;" onclick="location.href='{% url 'salo:salo' %}';">Сыграть еще раз</button>
+		</article>
+    
+	</div>
+	<!-- /#content --> 
+	
+	<footer id="footer">
+		<p>Но все же и здесь был Губанов Алексей!! <a href="http://slavonicpro.ru">Slavonic</a></p>
+	</footer>
+	
+</div>
+<!-- /#pagewrap -->
+
+</body>
+</html>
