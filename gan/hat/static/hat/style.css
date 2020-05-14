@@ -253,13 +253,20 @@ textarea{
   text-align: center;
 }
 
+#historyword {
+	font: bold 150% Arial, Helvetica, sans-serif;
+	color: #282;
+	margin: 5px;
+  text-align: center;
+}
+
 #players{
 	font: 100% Arial, Helvetica, sans-serif;
   width: 100%;
 }
 
 #cur_player{
-	color: #f00;
+	color: #ff0;
 }
 
 #timer{

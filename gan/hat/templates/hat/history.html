@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 {% load static %}
 <!-- disable iPhone inital scale -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Шляпа</title>
 <!-- main css -->
@@ -14,15 +13,13 @@
 </head>
 <body>
 <script>
-  $("body").css("background-color", "#663300");//коричневый
 </script>
 
 <div id="pagewrap">
 	<header id="header">
 		<hgroup>
 			<h1>Шляпа №{{ game.id }}</h1>
-			<h2>{{ game.round_name }}
-      </h2>
+			<h2>История игры</h2>
 		</hgroup>
   </header>	
 
@@ -33,11 +30,11 @@
 			<figure class="post-image"> 
 			</figure>			
 
-{% if game.player_set.count %}
+{% if history.count %}
     <table id='result'>
-    <tr><th>Команда</th><th>Очки</th></tr>
-    {% for command in commands_list %}
-        <tr><td>{{ command.0 }} + {{ command.1 }}</td><td>{{ command.2 }}</td></tr>
+    <tr><th>№</th><th>Этап</th><th>Игрок</th><th>Слово</th></tr>
+    {% for item in history %}
+        <tr><td>{{ forloop.counter }}</td><td>{{ item.state }}</td><td>{{ item.player.name }}</td><td>{{ item.word.word }}</td></tr>
     {% endfor %}
     </table>
 {% endif %}
@@ -45,7 +42,6 @@
 		</article>
     
  <button type="button" onclick="location.href='{% url 'hat:new' %}';">Сыграть еще раз</button>
- <button type="button" onclick="location.href='{% url 'hat:history' game.id %}';">История</button>
 
 	</div>
 	<!-- /#content --> 

@@ -98,6 +98,10 @@ def words(request, game_id):
   except:
     return HttpResponseRedirect(reverse('hat:new'))
     
+  #Нельзя вводить слова, когда игра уже идет
+  if game.state > 0:
+    return HttpResponseRedirect(reverse('hat:game', args=(game.id,)))
+    
   #Проверим, не левый ли игрок
   player_id = request.session.get('player_id', 0)
   try:
@@ -145,7 +149,6 @@ def savewords(request, game_id):
   
   if allWordsCreated:
     game.state = 1
-    game.begin_number = 0
     game.turn_number = 0
     game.save()
     
@@ -179,31 +182,38 @@ def pull(request, game_id):
   #Начало хода
   if request.POST.get('action', '') == 'turn':
     game.turn_number = player.number
-    game.timer = timezone.now()
+    game.timer = timezone.now() - datetime.timedelta(seconds=game.elapsed)  #с учетом уже потраченного времени в предыдущем раунде
 
   timeout = True
+  elapsed_seconds = 0
+  
+  #Проверяем таймаут
   if game.timer:
     elapsed_time = timezone.now() - game.timer
-    if elapsed_time.seconds < game.seconds:
+    elapsed_seconds = elapsed_time.seconds
+    if elapsed_seconds < game.seconds:
       timeout = False
    
+  #Кнопка "Угадал"
   if request.POST.get('action', '') == 'match':
     if not timeout:
       player.grades += 1
+      #Запоминаем выбор в истории
+      game.history_set.create(**{'game':game, 'player':player, 'word':player.cur_word, 'state':game.state})
+  #Кнопка "Сдаюсь"
   elif request.POST.get('action', '') == 'mismatch':
       timeout = True
   
   next_round = False
+  #Истек таймаут
   if timeout:
     if player.cur_word:
       player.cur_word.checked = False
       player.cur_word.save()
       player.cur_word = None
+      game.elapsed = 0
       #Ход следующего игрока
       game.turn_number = ((game.turn_number+1)%game.player_set.count())
-      # Нельзя оканчивать раунд, пока не открыты все слова
-      #if game.turn_number == game.begin_number:
-      #  next_round = True
     game.timer = None
   else:
     unchecked_words = game.word_set.filter(checked=False)
@@ -213,17 +223,16 @@ def pull(request, game_id):
       word = unchecked_words[num]
       word.checked = True
       player.cur_word = word
-    #Раунд окончен
+    #Раунд окончен. 
     else:
       next_round = True
       
-  #Следующий раунд
+  #Следующий раунд. Передачу хода не делаем, пусть доиграет свое время в новом раунде
   if next_round:
     player.cur_word = None
     game.timer = None
+    game.elapsed = elapsed_seconds #Запомним истекшее время
     game.state += 1
-    game.begin_number = ((game.begin_number+1)%game.player_set.count())
-    game.turn_number = game.begin_number
     words = game.word_set.all()
     for word in words:
       word.checked = False
@@ -277,6 +286,20 @@ def link(request, game_id):
     
   return render(request, 'hat/link.html', {'game': game})  
   
+  
+def history(request, game_id):
+  try:
+    game = Game.objects.get(pk=game_id)
+  except:
+    return HttpResponseRedirect(reverse('hat:new'))
+
+  #Нельзя смотреть историю, пока игра не закончилась
+  if not game.IsOver():
+    return HttpResponseRedirect(reverse('hat:game', args=(game.id,)))
+    
+  history = game.history_set.all()
+  return render(request, 'hat/history.html', {'game': game, 'history':history})  
+  
 #Диспетчер игры
 def game(request, game_id):
   #Проверим game_id
@@ -316,6 +339,21 @@ def game(request, game_id):
   #Ждем, пока все введут слова
   if game.state == 0:
     return render(request, 'hat/waitwords.html', {'game': game, 'player':player})  
-      
-  return render(request, 'hat/game.html', {'game': game, 'player':player, 'commands_list':commands_list})  
+    
+  history_word = ''
+  history_player = ''
+  if game.history_set.count():
+    history = game.history_set.all().last()
+    history_word = history.word.word
+    history_player = history.player.name
+    
+  return render(request, 'hat/game.html', 
+    {
+      'game': game, 
+      'player':player, 
+      'commands_list':commands_list, 
+      'history_word':history_word,
+      'history_player':history_player
+    }
+  )  
   

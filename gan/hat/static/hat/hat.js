@@ -38,6 +38,11 @@ function fetchdata(){
 })(jQuery);
 
 $(document).ready(function(){
- setTimeout(fetchdata,2000);
-  $('#word').textfill({ maxFontPixels: 36 })
+  setTimeout(fetchdata,2000);
+  
+  if ($("#word").length)
+    $('#word').textfill({ maxFontPixels: 36 })
+  
+  if ($("#historyword").length)
+    $('#historyword').textfill({ maxFontPixels: 36 })
 });

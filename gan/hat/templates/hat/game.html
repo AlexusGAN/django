@@ -55,7 +55,7 @@
 <form id="form" action="{% url 'hat:pull' game.id %}" method="post">
   {% csrf_token %}
   {% if player.cur_word %}
-    <div id="word"><span id="wordspan">{{ player.cur_word.word }}</span></div>
+    <div id="word"><span>{{ player.cur_word.word }}</span></div>
     <button type="submit" name="action" value="match">Угадал</button>
   {% else %}
     <button type="submit" name="action" value="turn">Выбрать слово</button>
@@ -74,13 +74,23 @@
 {% endif %}
 
 {% if player.HasTurn %}
+<!-- 
 {% if player.cur_word %}
 <button type="submit" name="action" value="mismatch">Сдаюсь</button>
 {% endif %}
+ -->     
 </form>
 {% endif %}
 
 		</article>
+
+{% if not player.HasTurn %}
+{% if history_word %}
+    <div>Последнее угаданное:</div>
+    <div id="historyword"><span>{{ history_word }}</span></div>
+    <div id="historyplayer">({{ history_player }})</div>
+{% endif %}
+{% endif %}
     
 	</div>
 	<!-- /#content --> 
@@ -99,7 +109,7 @@
  -->     
 
 	<footer id="footer">
-		<p>Здесь был Губанов Алексей!! <a href="http://slavonicpro.ru">Slavonic</a></p>
+		<p>Здесь был <a href="mailto:gubanov-alexey@yandex.ru?subject=Вопрос по игре Шляпа">Губанов Алексей</a>!! <a href="http://slavonicpro.ru">Slavonic</a></p>
 	</footer>
 	
 </div>
