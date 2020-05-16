@@ -50,7 +50,7 @@ $(document).ready(function(){
 
       <form id="form" action="{% url 'hat:pull' game.id %}" method="post">
         {% csrf_token %}
-          <button type="button" onclick="Copy();">Копировать ссылку в буфер</button>
+          <button type="button" onclick="Copy();">Копировать ссылку</button>
 <textarea rows="3" name="Url" id="Url"></textarea> 
           <button type="button" onclick="location.href='{% url 'hat:game' game.id %}';">Начать игру</button>
       </form>

@@ -30,6 +30,9 @@
 {% if game.state > 3 %}
   $("body").css("background-color", "#663300");//коричневый
 {% endif %}
+
+//let audio = new Audio('{% static 'hat/gong.mp3' %}'); 
+//audio.play();
 </script>
 
 <div id="pagewrap">
@@ -52,14 +55,15 @@
 			</figure>			
 
 {% if player.HasTurn %}
-<form id="form" action="{% url 'hat:pull' game.id %}" method="post">
+<form id="form" action="{% url 'hat:pull' game.id %}" method="post" onsubmit="$('#action').hide(); $('#action2').show();">
   {% csrf_token %}
   {% if player.cur_word %}
     <div id="word"><span>{{ player.cur_word.word }}</span></div>
-    <button type="submit" name="action" value="match">Угадал</button>
+    <button type="submit" id="action" name="action" value="match">Угадал</button>
   {% else %}
-    <button type="submit" name="action" value="turn">Выбрать слово</button>
+    <button type="submit" id="action" name="action" value="turn">Выбрать слово</button>
   {% endif %}
+    <button disabled type=button id="action2" style="display: none">Жди...</button>
 {% endif %}
 
 {% if game.player_set.count %}
@@ -107,7 +111,7 @@
 		</section>
 	</aside>
  -->     
-
+  
 	<footer id="footer">
 		<p>Здесь был <a href="mailto:gubanov-alexey@yandex.ru?subject=Вопрос по игре Шляпа">Губанов Алексей</a>!! <a href="http://slavonicpro.ru">Slavonic</a></p>
 	</footer>

@@ -45,4 +45,7 @@ $(document).ready(function(){
   
   if ($("#historyword").length)
     $('#historyword').textfill({ maxFontPixels: 36 })
+    
+  //if ($("#audiotag").length)
+  //  document.getElementById('audiotag').play();
 });
