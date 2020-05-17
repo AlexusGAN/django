@@ -30,9 +30,6 @@
 {% if game.state > 3 %}
   $("body").css("background-color", "#663300");//коричневый
 {% endif %}
-
-//let audio = new Audio('{% static 'hat/gong.mp3' %}'); 
-//audio.play();
 </script>
 
 <div id="pagewrap">
@@ -59,11 +56,11 @@
   {% csrf_token %}
   {% if player.cur_word %}
     <div id="word"><span>{{ player.cur_word.word }}</span></div>
-    <button style="display: none" type="submit" id="action" name="action" value="match">Угадал</button>
+    <button disabled style="display: none;" type="submit" id="action" name="action" value="match">Угадал</button>
   {% else %}
     <button type="submit" id="action" name="action" value="turn">Выбрать слово</button>
   {% endif %}
-    <button disabled type=button id="action2" style="display: none">Жди...</button>
+    <button disabled type=button id="action2" style="display: none;">Жди...</button>
 {% endif %}
 
 {% if game.player_set.count %}

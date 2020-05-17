@@ -2,8 +2,11 @@ var count = 0;
 
 function fetchdata(){
   //Покажем кнопку угадал. Сразу не видно, чтобы не жали случайно на медленных смартфонах
-  if ($("#action").length)
+  if (count == 0 && $("#action").length)
+  {
     $('#action').show();
+    $('#action').prop('disabled', false);
+  }
   
   //Не дадим забытым играм вечно теребить сервер
   if (count++ >= 120)
