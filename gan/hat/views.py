@@ -242,6 +242,11 @@ def pull(request, game_id):
   player.save()
   if player.cur_word:
     player.cur_word.save()
+
+  #Ведущему игроку перед начало раунда выдадим предварительную страницу раунда, чтобы
+  #он обратил внимание на новые правила
+  if next_round and not game.IsOver():
+    return HttpResponseRedirect(reverse('hat:round', args=(game.id,)))
     
   return HttpResponseRedirect(reverse('hat:game', args=(game.id,)))
 
@@ -285,7 +290,15 @@ def link(request, game_id):
     return HttpResponseRedirect(reverse('hat:new'))
     
   return render(request, 'hat/link.html', {'game': game})  
-  
+
+ 
+def round(request, game_id):
+  try:
+    game = Game.objects.get(pk=game_id)
+  except:
+    return HttpResponseRedirect(reverse('hat:new'))
+    
+  return render(request, 'hat/round.html', {'game': game})  
   
 def history(request, game_id):
   try:

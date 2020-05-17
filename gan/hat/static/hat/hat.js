@@ -1,21 +1,36 @@
+var count = 0;
+
 function fetchdata(){
- $.getJSON("ajax", function(data) {
-   if ($("#timer").length)
-    $("#timer").val(data['progress']);
-   else if (data['progress'] > 0 && data['progress'] < 100)
-   {
+  //Покажем кнопку угадал. Сразу не видно, чтобы не жали случайно на медленных смартфонах
+  if ($("#action").length)
+    $('#action').show();
+  
+  //Не дадим забытым играм вечно теребить сервер
+  if (count++ >= 120)
+  {
+    if ($("#action").length)
+      $('#action').hide(); 
+    $('#continue').show();
+    return;
+  }
+
+  $.getJSON("ajax", function(data) {
+    if ($("#timer").length)
+      $("#timer").val(data['progress']);
+    else if (data['progress'] > 0 && data['progress'] < 100)
+    {
       location.reload();
       return;
-   }
-   
-   if (data['progress'] >= 100 && $("form").length ) {
-     $( "#form" ).submit();
-   }
-   
-   if (turn_number != data['turn_number'] || grades != data['grades'] || game_state != data['game_state'])
+    }
+
+    if (data['progress'] >= 100 && $("form").length ) {
+      $( "#form" ).submit();
+    }
+
+    if (turn_number != data['turn_number'] || grades != data['grades'] || game_state != data['game_state'])
       location.reload();
-   else
-      setTimeout(fetchdata,2000);
+    else
+      setTimeout(fetchdata,1000);
  });
 }
 
@@ -38,14 +53,16 @@ function fetchdata(){
 })(jQuery);
 
 $(document).ready(function(){
-  setTimeout(fetchdata,2000);
+  setTimeout(fetchdata,1000);
+
+  if ($("#form").length)
+    $("#form").submit(function(data) {
+      $('#action').hide(); $('#action2').show();
+    })
   
   if ($("#word").length)
     $('#word').textfill({ maxFontPixels: 36 })
   
   if ($("#historyword").length)
     $('#historyword').textfill({ maxFontPixels: 36 })
-    
-  //if ($("#audiotag").length)
-  //  document.getElementById('audiotag').play();
 });

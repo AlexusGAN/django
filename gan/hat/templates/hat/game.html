@@ -55,11 +55,11 @@
 			</figure>			
 
 {% if player.HasTurn %}
-<form id="form" action="{% url 'hat:pull' game.id %}" method="post" onsubmit="$('#action').hide(); $('#action2').show();">
+<form id="form" action="{% url 'hat:pull' game.id %}" method="post">
   {% csrf_token %}
   {% if player.cur_word %}
     <div id="word"><span>{{ player.cur_word.word }}</span></div>
-    <button type="submit" id="action" name="action" value="match">Угадал</button>
+    <button style="display: none" type="submit" id="action" name="action" value="match">Угадал</button>
   {% else %}
     <button type="submit" id="action" name="action" value="turn">Выбрать слово</button>
   {% endif %}
@@ -95,6 +95,10 @@
     <div id="historyplayer">({{ history_player }})</div>
 {% endif %}
 {% endif %}
+
+ <div id="continue">Пауза
+ <button type="button"  onclick="location.href='{% url 'hat:game' game.id %}';">Продолжить</button>
+ </div>
     
 	</div>
 	<!-- /#content --> 

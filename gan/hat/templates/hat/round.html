@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+{% load static %}
+<!-- disable iPhone inital scale -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Шляпа</title>
+<!-- main css -->
+<link href="{% static 'hat/style.css' %}"  rel="stylesheet" type="text/css">
+<!-- media queries css -->
+<link href="{% static 'hat/media-queries.css' %}"  rel="stylesheet" type="text/css">
+</head>
+<body>
+<script>
+{% if game.state == 1 %}
+  $("body").css("background-color", "#003333");//зеленый
+{% endif %}
+{% if game.state == 2 %}
+  $("body").css("background-color", "#4d0424");//фиолет
+{% endif %}
+{% if game.state == 3 %}
+  $("body").css("background-color", "#660000");//красный
+{% endif %}
+{% if game.state > 3 %}
+  $("body").css("background-color", "#663300");//коричневый
+{% endif %}
+</script>
+
+<div id="pagewrap">
+	<header id="header">
+		<hgroup>
+			<h1>Шляпа №{{ game.id }}</h1>
+			<h2>{{ game.round_name }}
+      </h2>
+		</hgroup>
+  </header>	
+
+	<div id="content">
+		<article class="post clearfix">
+			<header>
+			</header>
+			<figure class="post-image"> 
+			</figure>			
+    Внимание! Начинается новый раунд.
+{% if game.state == 2 %}
+  Теперь ты должен объяснить слово жестами. Произносить слова нельзя.
+{% endif %}
+{% if game.state == 3 %}
+  Теперь ты должен объяснить слово только одним другим словом. Однокоренные слова, конечно, нельзя.
+{% endif %}
+{% if game.state > 3 %}
+  Теперь ты должен объяснить слово одним звуком. Показывать жестами и произносить членораздельные слова нельзя.
+{% endif %}
+		</article>
+    
+ <div id="word" style="display: none"><span></span></div>
+ <button id="btncont" type="button" onclick="oncontinue()">Начать раунд</button>
+
+	</div>
+	<!-- /#content --> 
+	
+	<footer id="footer">
+		<p>Здесь был <a href="mailto:gubanov-alexey@yandex.ru?subject=Вопрос по игре Шляпа">Губанов Алексей</a>!! <a href="http://slavonicpro.ru">Slavonic</a></p>
+	</footer>
+	
+</div>
+<!-- /#pagewrap -->
+
+<script>
+countdown = 5
+function oncountdown(){
+  if (countdown-- == 0)
+    location.href='{% url 'hat:game' game.id %}';
+  else
+  {
+    $('#word').html(countdown); 
+    setTimeout(oncountdown,1000);
+  }
+}
+
+function oncontinue(){
+  $('#btncont').hide(); 
+  $('#word').show(); 
+  $('#word').html(countdown); 
+  let audio = new Audio('{% static 'hat/gong.mp3' %}'); 
+  audio.play();
+  setTimeout(oncountdown,1000);
+}
+</script>
+
+
+</body>
+</html>

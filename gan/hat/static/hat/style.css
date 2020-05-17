@@ -273,6 +273,12 @@ textarea{
   width: 100%;
 }
 
+#continue {
+  display: none;
+  text-align: center;
+	font: 120% Arial, Helvetica, sans-serif;
+}
+
 #result table {
   width: 100%; /* Ширина таблицы */
   border-spacing: 1px; /* Расстояние между ячейками */

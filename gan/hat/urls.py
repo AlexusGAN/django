@@ -14,5 +14,6 @@ urlpatterns = [
     path('<int:game_id>/words/save', views.savewords, name='savewords'),
     path('<int:game_id>/pull', views.pull, name='pull'),
     path('<int:game_id>/link', views.link, name='link'),
+    path('<int:game_id>/round', views.round, name='round'),
     path('<int:game_id>/history', views.history, name='history'),
 ]
