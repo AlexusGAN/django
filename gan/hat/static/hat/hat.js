@@ -1,4 +1,5 @@
 var count = 0;
+var stop_reload = false;
 
 function fetchdata(){
   //Покажем кнопку угадал. Сразу не видно, чтобы не жали случайно на медленных смартфонах
@@ -17,7 +18,14 @@ function fetchdata(){
     return;
   }
 
+  if (stop_reload)
+    return;
+  
   $.getJSON("ajax", function(data) {
+  
+    if (stop_reload)
+      return;
+    
     if ($("#timer").length)
       $("#timer").val(data['progress']);
     else if (data['progress'] > 0 && data['progress'] < 100)
@@ -60,7 +68,10 @@ $(document).ready(function(){
 
   if ($("#form").length)
     $("#form").submit(function(data) {
-      $('#action').hide(); $('#action2').show();
+      $('#action').hide(); 
+      $('#action2').show();
+      //Блокируем кeload через ajax, иначе можем уйти со страницы round
+      stop_reload = true;
     })
   
   if ($("#word").length)
