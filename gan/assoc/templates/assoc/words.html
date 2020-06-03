@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+{% load static %}
+<!-- disable iPhone inital scale -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ассоциация [{{ player.name }}]</title>
+<!-- main css -->
+<link href="{% static 'assoc/style.css' %}"  rel="stylesheet" type="text/css">
+<!-- media queries css -->
+<link href="{% static 'assoc/media-queries.css' %}"  rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="pagewrap">
+	<header id="header">
+		<hgroup>
+      <h1>{{ player.name }}</h1>
+      <h2>Придумай {{ game.wordsnum }} слов</h2>
+		</hgroup>
+	</header>	
+
+	<div id="content">
+		<article class="post clearfix">
+			<header>
+			</header>
+			<figure class="post-image"> 
+			</figure>			
+
+<form action="{% url 'assoc:savewords' game.id %}" method="post">
+{% csrf_token %}
+  <p>Это будут слова для ассоцаций.
+  <p>Вводи их через пробел или с новой строки<p>
+<textarea rows="{{ game.wordsnum }}" name="words" id="wordsarea" >
+{% for word in player.word_set.all %}{{ word.word }}
+{% endfor %}
+</textarea>
+  <br>
+<button type="submit" name="action" value="savewords">Отправить</button>
+</form>
+
+		</article>
+	</div>
+	<!-- /#content --> 
+	<footer id="footer">
+		<p>Здесь был <a href="mailto:gubanov-alexey@yandex.ru?subject=Вопрос по игре">Губанов Алексей</a>!! <a href="http://slavonicpro.ru">Slavonic</a></p>
+	</footer>
+	
+</div>
+<!-- /#pagewrap -->
+
+</body>
+</html>

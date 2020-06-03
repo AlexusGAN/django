@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+{% load static %}
+<!-- disable iPhone inital scale -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ассоциация</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'assoc/assoc.js' %}"></script>
+<!-- main css -->
+<link href="{% static 'assoc/style.css' %}"  rel="stylesheet" type="text/css">
+<!-- media queries css -->
+<link href="{% static 'assoc/media-queries.css' %}"  rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="{%  static 'assoc/favicon.ico' %}">
+</head>
+<body>
+<div id="pagewrap">
+	<header id="header">
+		<hgroup>
+    <h1>Игра "Ассоциация"</h1>
+		<h2>Введи игроков</h2>
+		</hgroup>
+	</header>	
+
+	<div id="content">
+		<article class="post clearfix">
+			<header>
+			</header>
+			<figure class="post-image"> 
+      <!-- <img src="{%  static 'assoc/assoc.png' %}">--> 
+			</figure>			
+
+<form action="{% url 'assoc:create' %}" method="post">
+{% csrf_token %}
+  <p>По <input type="text" name="wordsnum" id="wordsnum" value="2" size="1pt"> ассоциации с игрока
+  <p>Напиши игроков одной команды через '+'. Каждую команду вводи с новой строки. Например:
+  <p>
+<textarea rows="8" name="players" id="players">
+Круг+Квадрат
+Прямоугольник+Треугольник
+Прямая+Трапеция
+</textarea>
+  <p>
+<button type="submit" name="action" value="start">Начать игру</button>
+</form>
+
+		</article>
+	</div>
+	<!-- /#content --> 
+	<footer id="footer">
+		<p>Здесь был <a href="mailto:gubanov-alexey@yandex.ru?subject=Вопрос по игре">Губанов Алексей</a>!! <a href="http://slavonicpro.ru">Slavonic</a></p>
+	</footer>
+	
+</div>
+<!-- /#pagewrap -->
+
+</body>
+</html>

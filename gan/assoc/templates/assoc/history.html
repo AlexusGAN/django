@@ -5,11 +5,11 @@
 {% load static %}
 <!-- disable iPhone inital scale -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Шляпа</title>
+<title>Ассоциация</title>
 <!-- main css -->
-<link href="{% static 'hat/style.css' %}"  rel="stylesheet" type="text/css">
+<link href="{% static 'assoc/style.css' %}"  rel="stylesheet" type="text/css">
 <!-- media queries css -->
-<link href="{% static 'hat/media-queries.css' %}"  rel="stylesheet" type="text/css">
+<link href="{% static 'assoc/media-queries.css' %}"  rel="stylesheet" type="text/css">
 </head>
 <body>
 <script>
@@ -18,7 +18,7 @@
 <div id="pagewrap">
 	<header id="header">
 		<hgroup>
-			<h1>Шляпа №{{ game.id }}</h1>
+			<h1>Ассоциация №{{ game.id }}</h1>
 			<h2>История игры</h2>
 		</hgroup>
   </header>	
@@ -41,13 +41,13 @@
 
 		</article>
     
- <button type="button" onclick="location.href='{% url 'hat:new' %}';">Сыграть еще раз</button>
+ <button type="button" onclick="location.href='{% url 'assoc:new' %}';">Сыграть еще раз</button>
 
 	</div>
 	<!-- /#content --> 
 	
 	<footer id="footer">
-		<p>Здесь был <a href="mailto:gubanov-alexey@yandex.ru?subject=Вопрос по игре Шляпа">Губанов Алексей</a>!! <a href="http://slavonicpro.ru">Slavonic</a></p>
+		<p>Здесь был <a href="mailto:gubanov-alexey@yandex.ru?subject=Вопрос по игре">Губанов Алексей</a>!! <a href="http://slavonicpro.ru">Slavonic</a></p>
 	</footer>
 	
 </div>

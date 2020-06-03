@@ -11,6 +11,7 @@ class Game(models.Model):
   elapsed = models.SmallIntegerField(default=0) #затрачено времени в последнем ходе предыдущего раунда
   #текущий игрок
   turn_number = models.SmallIntegerField(default=0) #номер игрока, чей ход сейчас
+  begin_number = models.SmallIntegerField(default=0) #номер игрока, с которого начался круг (для ассоциации)
   
   wordsnum = models.SmallIntegerField(default=5) #количество слов
   seconds = models.SmallIntegerField(default=60) #секунд на ход
@@ -18,7 +19,10 @@ class Game(models.Model):
   
   def cur_player(self):
     return self.player_set.all()[self.turn_number]
-   
+
+  def begin_player(self):
+    return self.player_set.all()[self.begin_number]
+    
   #Описание раунда
   def round_name(self):
     if self.IsOver():
