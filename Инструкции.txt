@@ -1,86 +1,86 @@
-https://docs.djangoproject.com/en/3.0/intro/tutorial02/
+п»їhttps://docs.djangoproject.com/en/3.0/intro/tutorial02/
 
-* Создать проект (из каталога Django, каталог проекта руками создавать не нужно):
-django-admin.py startproject <имя проекта> 
+* РЎРѕР·РґР°С‚СЊ РїСЂРѕРµРєС‚ (РёР· РєР°С‚Р°Р»РѕРіР° Django, РєР°С‚Р°Р»РѕРі РїСЂРѕРµРєС‚Р° СЂСѓРєР°РјРё СЃРѕР·РґР°РІР°С‚СЊ РЅРµ РЅСѓР¶РЅРѕ):
+django-admin.py startproject <РёРјСЏ РїСЂРѕРµРєС‚Р°> 
 
-* Настройка проекта:
-Меняем имя базы на наше (например, 'gan.db'):
+* РќР°СЃС‚СЂРѕР№РєР° РїСЂРѕРµРєС‚Р°:
+РњРµРЅСЏРµРј РёРјСЏ Р±Р°Р·С‹ РЅР° РЅР°С€Рµ (РЅР°РїСЂРёРјРµСЂ, 'gan.db'):
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'gan.db'),
     }
 }
-Язык:
+РЇР·С‹Рє:
 LANGUAGE_CODE = 'ru-ru'
-Локализация
+Р›РѕРєР°Р»РёР·Р°С†РёСЏ
 TIME_ZONE = 'Europe/Moscow'
 
-* Создать базу из моделей:
+* РЎРѕР·РґР°С‚СЊ Р±Р°Р·Сѓ РёР· РјРѕРґРµР»РµР№:
 manage.py migrate 
 
-* Запустить веб-сервер
+* Р—Р°РїСѓСЃС‚РёС‚СЊ РІРµР±-СЃРµСЂРІРµСЂ
 manage.py runserver
-Остановить сервер: <Ctrl>+<Break>
+РћСЃС‚Р°РЅРѕРІРёС‚СЊ СЃРµСЂРІРµСЂ: <Ctrl>+<Break>
 
-*Создать суперпользователя
+*РЎРѕР·РґР°С‚СЊ СЃСѓРїРµСЂРїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 python manage.py createsuperuser
-Для проекта gan:
-Логин: gan
-Пароль: cppcppcpp
+Р”Р»СЏ РїСЂРѕРµРєС‚Р° gan:
+Р›РѕРіРёРЅ: gan
+РџР°СЂРѕР»СЊ: cppcppcpp
 e-mail: gubanov-alexey@yandex.ru
 
-* версия Django
+* РІРµСЂСЃРёСЏ Django
 python -m django --version
 
-* Создать приложение hat в проекте
+* РЎРѕР·РґР°С‚СЊ РїСЂРёР»РѕР¶РµРЅРёРµ hat РІ РїСЂРѕРµРєС‚Рµ
 manage.py startapp hat
 
-* Активация приложения
+* РђРєС‚РёРІР°С†РёСЏ РїСЂРёР»РѕР¶РµРЅРёСЏ
 To include the app in our project, we need to add a reference to its configuration class in the INSTALLED_APPS setting. 
 The HatConfig class is in the hat/apps.py file, so its dotted path is 'hat.apps.HatConfig'. 
-Edit the gan/settings.py file and add that dotted path to the INSTALLED_APPS setting. It’ll look like this:
+Edit the gan/settings.py file and add that dotted path to the INSTALLED_APPS setting. ItвЂ™ll look like this:
 
-В gan/settings.py:
+Р’ gan/settings.py:
 INSTALLED_APPS = [
     'hat.apps.HatConfig',
     'django.contrib.admin',
 	...
 ]
 
-* Создать миграцию в hat/migrations/0001_initial.py
+* РЎРѕР·РґР°С‚СЊ РјРёРіСЂР°С†РёСЋ РІ hat/migrations/0001_initial.py
  manage.py makemigrations hat
 
-* Применить миграцию
+* РџСЂРёРјРµРЅРёС‚СЊ РјРёРіСЂР°С†РёСЋ
  manage.py migrate
 
-* Посмотреть SQL миграции
+* РџРѕСЃРјРѕС‚СЂРµС‚СЊ SQL РјРёРіСЂР°С†РёРё
  manage.py sqlmigrate hat 0001
 
-* Запуск Питоновской оболочки, настроенной на проект
+* Р—Р°РїСѓСЃРє РџРёС‚РѕРЅРѕРІСЃРєРѕР№ РѕР±РѕР»РѕС‡РєРё, РЅР°СЃС‚СЂРѕРµРЅРЅРѕР№ РЅР° РїСЂРѕРµРєС‚
 manage.py shell
 
-* Админский сайт
+* РђРґРјРёРЅСЃРєРёР№ СЃР°Р№С‚
  http://127.0.0.1:8000/admin/
  
-* Доступ к дочерним записям модели Choice из Модели Query q.
+* Р”РѕСЃС‚СѓРї Рє РґРѕС‡РµСЂРЅРёРј Р·Р°РїРёСЃСЏРј РјРѕРґРµР»Рё Choice РёР· РњРѕРґРµР»Рё Query q.
  q.choice_set.all()
  q.choice_set.create(choice_text='Not much', votes=0)
  
-* Статический каталог
+* РЎС‚Р°С‚РёС‡РµСЃРєРёР№ РєР°С‚Р°Р»РѕРі
  hat/static/hat/style.css
  
-* Запустить свой скрипт в окружении Django проще всего как команду Django
-Для этого создаем скрипт как Django\gan\hat\management\commands\myscript.py
+* Р—Р°РїСѓСЃС‚РёС‚СЊ СЃРІРѕР№ СЃРєСЂРёРїС‚ РІ РѕРєСЂСѓР¶РµРЅРёРё Django РїСЂРѕС‰Рµ РІСЃРµРіРѕ РєР°Рє РєРѕРјР°РЅРґСѓ Django
+Р”Р»СЏ СЌС‚РѕРіРѕ СЃРѕР·РґР°РµРј СЃРєСЂРёРїС‚ РєР°Рє Django\gan\hat\management\commands\myscript.py
 from django.core.management.base import BaseCommand
 class Command(BaseCommand):
   def handle(self, **options):
-    пишем здесь код
+    РїРёС€РµРј Р·РґРµСЃСЊ РєРѕРґ
 
-Вызываем так:
+Р’С‹Р·С‹РІР°РµРј С‚Р°Рє:
 manage.py myscript
 
-svn checkout svn+ssh:https://helixteamhub.cloud/slavonicpro/projects/gan/repositories/subversion/gan/gan —username gubanov-alexey@yandex.ru —password slavonic
+svn checkout svn+ssh:https://helixteamhub.cloud/slavonicpro/projects/gan/repositories/subversion/gan/gan вЂ”username gubanov-alexey@yandex.ru вЂ”password slavonic
 
 GIT
 https://pyneng.github.io/docs/git-github/
@@ -88,32 +88,32 @@ https://maxsite.org/page/how-to-put-your-project-on-github-com
 https://old.calculate-linux.org/main/ru/git
 
 
-Команда git pull сразу забирает изменения и проводит слияние с активной веткой.
-Забрать из репозитория, для которого были созданы удаленные ветки по умолчанию:
+РљРѕРјР°РЅРґР° git pull СЃСЂР°Р·Сѓ Р·Р°Р±РёСЂР°РµС‚ РёР·РјРµРЅРµРЅРёСЏ Рё РїСЂРѕРІРѕРґРёС‚ СЃР»РёСЏРЅРёРµ СЃ Р°РєС‚РёРІРЅРѕР№ РІРµС‚РєРѕР№.
+Р—Р°Р±СЂР°С‚СЊ РёР· СЂРµРїРѕР·РёС‚РѕСЂРёСЏ, РґР»СЏ РєРѕС‚РѕСЂРѕРіРѕ Р±С‹Р»Рё СЃРѕР·РґР°РЅС‹ СѓРґР°Р»РµРЅРЅС‹Рµ РІРµС‚РєРё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ:
 git pull
 
-Забрать изменения и метки из определенного репозитория:
+Р—Р°Р±СЂР°С‚СЊ РёР·РјРµРЅРµРЅРёСЏ Рё РјРµС‚РєРё РёР· РѕРїСЂРµРґРµР»РµРЅРЅРѕРіРѕ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ:
 git pull username-project --tags
 
-Отправить свои изменения в удаленную ветку, созданную при клонировании по умолчанию:
+РћС‚РїСЂР°РІРёС‚СЊ СЃРІРѕРё РёР·РјРµРЅРµРЅРёСЏ РІ СѓРґР°Р»РµРЅРЅСѓСЋ РІРµС‚РєСѓ, СЃРѕР·РґР°РЅРЅСѓСЋ РїСЂРё РєР»РѕРЅРёСЂРѕРІР°РЅРёРё РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ:
 git push
 
-Для работы с ним локально, его нужно скопировать. Для этого используется команда git clone:
+Р”Р»СЏ СЂР°Р±РѕС‚С‹ СЃ РЅРёРј Р»РѕРєР°Р»СЊРЅРѕ, РµРіРѕ РЅСѓР¶РЅРѕ СЃРєРѕРїРёСЂРѕРІР°С‚СЊ. Р”Р»СЏ СЌС‚РѕРіРѕ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РєРѕРјР°РЅРґР° git clone:
 $ git clone ssh://git@github.com/pyneng/online-4-natasha-samoylenko.git
 
-перед началом работы, синхронизируете локальное содержимое с GitHub командой git pull (синхронизация из GitHub в локальный репозиторий)
-редактируете какие-то файлы репозитория
-добавляете их в staging командой git add .
-делаете commit с помощью git commit
-когда вы готовы закачать локальные изменения на GitHub, делаете git push
+РїРµСЂРµРґ РЅР°С‡Р°Р»РѕРј СЂР°Р±РѕС‚С‹, СЃРёРЅС…СЂРѕРЅРёР·РёСЂСѓРµС‚Рµ Р»РѕРєР°Р»СЊРЅРѕРµ СЃРѕРґРµСЂР¶РёРјРѕРµ СЃ GitHub РєРѕРјР°РЅРґРѕР№ git pull (СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЏ РёР· GitHub РІ Р»РѕРєР°Р»СЊРЅС‹Р№ СЂРµРїРѕР·РёС‚РѕСЂРёР№)
+СЂРµРґР°РєС‚РёСЂСѓРµС‚Рµ РєР°РєРёРµ-С‚Рѕ С„Р°Р№Р»С‹ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ
+РґРѕР±Р°РІР»СЏРµС‚Рµ РёС… РІ staging РєРѕРјР°РЅРґРѕР№ git add .
+РґРµР»Р°РµС‚Рµ commit СЃ РїРѕРјРѕС‰СЊСЋ git commit
+РєРѕРіРґР° РІС‹ РіРѕС‚РѕРІС‹ Р·Р°РєР°С‡Р°С‚СЊ Р»РѕРєР°Р»СЊРЅС‹Рµ РёР·РјРµРЅРµРЅРёСЏ РЅР° GitHub, РґРµР»Р°РµС‚Рµ git push
 
-Локально
+Р›РѕРєР°Р»СЊРЅРѕ
 git add .
-git commit -m 'Комментарий к коммиту'
+git commit -m 'РљРѕРјРјРµРЅС‚Р°СЂРёР№ Рє РєРѕРјРјРёС‚Сѓ'
 git push 
 
-В консоли на https://www.pythonanywhere.com/user/gan/consoles
-* Отменить правки в базе, иначе не даст сделать git pull
+Р’ РєРѕРЅСЃРѕР»Рё РЅР° https://www.pythonanywhere.com/user/gan/consoles
+* РћС‚РјРµРЅРёС‚СЊ РїСЂР°РІРєРё РІ Р±Р°Р·Рµ, РёРЅР°С‡Рµ РЅРµ РґР°СЃС‚ СЃРґРµР»Р°С‚СЊ git pull
 git checkout gan/gan.db
-* Взять из удаленного репозитория
+* Р’Р·СЏС‚СЊ РёР· СѓРґР°Р»РµРЅРЅРѕРіРѕ СЂРµРїРѕР·РёС‚РѕСЂРёСЏ
 git pull
