@@ -6,6 +6,7 @@ import urllib.parse
 import urllib.request
 import re
 
+#GAN
 def salo(request):
   url = "http://www.russianchurchlondon.org/calendar/"
   post = ""
