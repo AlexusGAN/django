@@ -117,3 +117,71 @@ git push
 git checkout gan/gan.db
 * Взять из удаленного репозитория
 git pull
+
+Как восстановить проект на www.pythonanywhere.com, если его удалили по таймауту
+
+1. Зарегаться снова, вероятно с новым именем. Например, если username будет AlexusGAN, то шляпа после настроек будет доступна по адресу https://alexusgan.pythonanywhere.com/hat/
+
+2. В локальный файл c:\Users\Pro-GubanovAN\Dropbox\Other\Python\Django\gan\gan\settings.py добавить в массив ALLOWED_HOSTS сайт alexusgan.pythonanywhere.com:
+ALLOWED_HOSTS = ['localhost', 'alexusgan.pythonanywhere.com', '127.0.0.1', '192.168.1.247', '192.168.1.158', '[::1]']
+Залить файл в репозиторий github
+
+После этого по инструкции https://help.pythonanywhere.com/pages/DeployExistingDjangoProject
+
+3. Открыть bash консоль и склонировать проект:
+git clone https://github.com/AlexusGAN/django
+
+4. Создать виртуальное окружение для подходящей версии Питона (3.10 подходит)
+mkvirtualenv --python=/usr/bin/python3.10 gan-venv
+
+5. Установить в него django
+pip install django
+
+6. На Dashboard выбрать "Open Web Tab", и там выбрать "Add a new web app". В качестве фреймворка выбрать "Manual Configuration", ибо мы разворачиваем уже готовый проект
+
+7. На странице Web Tab указать Virtualenv как /home/AlexusGAN/.virtualenvs/gan-venv
+
+8. На странице Web Tab в секции Code выбрать файл /var/www/alexusgan_pythonanywhere_com_wsgi.py и отредактировать его вот так:
+# +++++++++++ DJANGO +++++++++++
+# To use your own django app use code like this:
+import os
+import sys
+
+# assuming your django settings file is at '/home/AlexusGAN/mysite/mysite/settings.py'
+# and your manage.py is is at '/home/AlexusGAN/mysite/manage.py'
+#path = '/home/myusername/mysite'
+
+path = '/home/AlexusGAN/django/gan'
+if path not in sys.path:
+    sys.path.append(path)
+
+#os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+#os.environ['DJANGO_SETTINGS_MODULE'] = '/home/AlexusGAN/django/gan/gan/settings.py'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'gan.settings'
+
+# then:
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+9. Сохранить файл (кнопка Save в редакторе) и перезапустить проект AlexusGAN.pythonanywhere.com (по кнопке в редакторе или по зеленой кнопке на Web Tab). 
+Посмотреть, нет ли ошибок в файле ошибок. Он доступен на Web Tab в секции Log files
+
+9. Перейти в bash консоли в каталог /django/gan
+cd /home/AlexusGAN/django/gan
+и выполнить инсталляцию БД. Но не так, как написано ./manage.py migrate (так вылезет ошибка Permission denied), а вот так с python:
+python ./manage.py migrate
+
+10. Прописать статики на Web Tab в разделе Static files, по одному на каждое приложение:
+URL	      Directory	                          
+/static/	/home/AlexusGAN/django/gan/hat/static	 
+/static/	/home/AlexusGAN/django/gan/assoc/static	 
+/static/	/home/AlexusGAN/django/gan/salo/static
+
+Перезапустить еще раз проект.
+
+11. Убедиться, что Шляпа загружается по адресу https://alexusgan.pythonanywhere.com/hat/ с картинками
+
+12. Если надо обновиться с github, то в bash консоли переходим в каталог django
+cd django
+и делаем 
+~/django (master)$ git pull
