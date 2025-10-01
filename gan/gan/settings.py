@@ -25,7 +25,7 @@ SECRET_KEY = '%w8lt%j%ky!_(d%q%uw+4!h9$-&=7u4(sam+%^q4ih^ge(=07q'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'alexusgan.pythonanywhere.com', '127.0.0.1', '192.168.1.247', '192.168.1.158', '[::1]']
+ALLOWED_HOSTS = ['localhost', 'alpha.slavonicpro.ru', 'alexusgan.pythonanywhere.com', '127.0.0.1', '192.168.1.247', '192.168.1.158', '[::1]']
 
 
 # Application definition
