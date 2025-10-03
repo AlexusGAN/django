@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', 'alpha.slavonicpro.ru', 'alexusgan.pythonanywhere.com', '127.0.0.1', '192.168.1.247', '192.168.1.158', '[::1]']
 
+CSRF_TRUSTED_ORIGINS = [
+            "https://alpha.slavonicpro.ru"
+        ]
 
 # Application definition
 

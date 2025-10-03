@@ -20,5 +20,6 @@ urlpatterns = [
     path('hat/', include('hat.urls')),
     path('assoc/', include('assoc.urls')),
     path('admin/', admin.site.urls),
+    path('django/admin/', admin.site.urls),
     path('salo/', include('salo.urls')),
 ]
