@@ -1,0 +1,32 @@
+server {
+  listen 8000 ssl;
+  server_name alpha.slavonicpro.ru;
+  ssl_certificate /root/cert/alpha.slavonicpro.ru/fullchain.pem;
+  ssl_certificate_key /root/cert/alpha.slavonicpro.ru/privkey.pem;
+
+  location = /favicon.ico { access_log off; log_not_found off; }
+
+  location ~ /static/(hat|assoc|salo|admin)/ {
+          root /home/gan/django/gan/$1/;
+  }
+
+  location ~ /django/admin {
+          include proxy_params;
+          alias /home/gan/django/gan/admin;
+          proxy_pass http://unix:/home/gan/django/gan/server.sock;
+  }
+  
+  location ~ /(hat|assoc|salo|admin)/ {
+          include proxy_params;
+          proxy_pass http://unix:/home/gan/django/gan/server.sock;
+  }
+ 
+}
+
+server {
+    listen 8000;
+    listen [::]:8000;
+
+    server_name alpha.slavonicpro.ru;
+    return 302 https://$server_name$request_uri;
+}
